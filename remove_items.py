@@ -1,5 +1,12 @@
 import csv
 import openpyxl
+from openpyxl.worksheet import worksheet
+
+filename = "products_for_upload_to_site.xlsx"
+text = "TV Juhtimispult "
+text2 = "ТВ пульт "
+supplier_file = "exists_supplier_barcodes/supplierProducts.xlsx"
+exists_supplier = "exists_supplier_barcodes/existBarcodes.xlsx"
 
 
 def set_maker():
@@ -38,19 +45,36 @@ def del_set_maker(path):
 def sell_dict_full():
     """
     используя два множества получаю готовый список для экспорта товара
-    :return:
+    :return: список для экспорта товара
     """
     lst = []
     full_set, dicts = set_maker()
-    del_set = del_set_maker("supplierProducts.xlsx") | del_set_maker("existBarcodes.xlsx")
+    del_set = del_set_maker(supplier_file) | del_set_maker(exists_supplier)
     finish_set = full_set - del_set
-    # print(len(finish_set))
-    # print(len(dicts))
     new_dicts = {}
     for key, value in dicts.items():
         if key in finish_set:
             new_dicts[key] = value
-    print(new_dicts)
+    return new_dicts
+    # for key, value in new_dicts.items():
+    #     print(key, value)
 
 
-sell_dict_full()
+new_dict = sell_dict_full()
+
+book = openpyxl.load_workbook(filename=filename)
+sheet: worksheet = book["Worksheet"]
+
+
+def name_adding():
+    """
+    добавление дополнительного названия на русском и эстонском языках
+    :return:
+    """
+    for key, value in new_dict.items():
+        value.append(text + value[0])
+        value.append(text2 + value[0])
+
+
+name_adding()
+print(new_dict)
