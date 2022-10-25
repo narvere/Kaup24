@@ -1,0 +1,3 @@
+exists - List of your products, which can be connected to our current assortment.
+supplier - List of your products, which already exist in your assortment.
+new - List of your products, which we don’t have in our current assortment. Please create these product cards.
