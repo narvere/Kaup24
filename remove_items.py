@@ -77,4 +77,13 @@ def name_adding():
 
 
 name_adding()
-print(new_dict)
+for key, value in enumerate(new_dict):
+    print(key, value, new_dict[value])
+    # sheet[f"A{i}"].value = category_idA
+    # sheet[f"C{i}"].value = key
+# print(key, value)
+
+
+# x = {1: 5, 4: 6, 8: 5}
+# for key, value in enumerate(x):
+#     print(key, value, x[value])
